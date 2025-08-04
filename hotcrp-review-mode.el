@@ -9,6 +9,10 @@
 
 (defvar hotcrp-review-mode-hook nil)
 
+(defvar-keymap hotcrp-review-mode-map
+  :doc "Keymap for hotcrp-review-mode."
+  "M-q" #'fill-paragraph)
+
 (defvar hotcrp-review-mode-syntax-table
   (let ((st (make-syntax-table)))
     ;; Comment syntax for `==-== ` lines (not real Emacs comments, just coloring)
@@ -55,6 +59,7 @@
 (define-derived-mode hotcrp-review-mode prog-mode "HotCRP Review"
   "Major mode for editing HotCRP review files."
   :syntax-table hotcrp-review-mode-syntax-table
+  :keymap hotcrp-review-mode-map
   (setq font-lock-defaults '((hotcrp-review-font-lock-keywords)))
   (setq-local comment-start "==-== ")
   (setq-local comment-start-skip "^==-==[ ]*")
