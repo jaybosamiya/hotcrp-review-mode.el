@@ -19,9 +19,9 @@
 (defconst hotcrp-review-font-lock-keywords
   (list
    ;; HotCRP-specific markup
-   '("^==\\+== .*$" . 'font-lock-type-face)
-   '("^==\\*== .*$" . 'font-lock-keyword-face)
-   '("^==\\-== .*$" . 'font-lock-comment-face)
+   '("^==\\+== .*$" . (0 'font-lock-type-face t))
+   '("^==\\*== .*$" . (0 'font-lock-keyword-face t))
+   '("^==\\-== .*$" . (0 'font-lock-comment-face t))
 
    ;; Headings
    '("^\\(#+\\)\\s-+\\(.*\\)$" . ((1 'font-lock-function-name-face) (2 'font-lock-function-name-face)))
