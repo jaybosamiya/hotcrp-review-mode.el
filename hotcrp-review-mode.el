@@ -6,7 +6,6 @@
 ;;; Code:
 
 (require 'prog-mode)
-(require 'markdown-mode)
 
 (defvar hotcrp-review-mode-hook nil)
 
@@ -18,13 +17,39 @@
 
 ;; Font-lock definitions
 (defconst hotcrp-review-font-lock-keywords
-  (let ((base markdown-mode-font-lock-keywords))
-    (append
-     ;; High-priority HotCRP rules
-     '(("^==\\+== .*$" (0 'font-lock-type-face t))
-       ("^==\\*== .*$" (0 'font-lock-keyword-face t))
-       ("^==\-== .*$" (0 'font-lock-comment-face t)))
-     base)))
+  (list
+   ;; HotCRP-specific markup
+   '("^==\\+== .*$" . 'font-lock-type-face)
+   '("^==\\*== .*$" . 'font-lock-keyword-face)
+   '("^==\\-== .*$" . 'font-lock-comment-face)
+
+   ;; Headings
+   '("^\\(#+\\)\\s-+\\(.*\\)$" . ((1 'font-lock-function-name-face) (2 'font-lock-function-name-face)))
+
+   ;; Blockquote
+   '("^>\\s-?.*$" . 'font-lock-preprocessor-face)
+
+   ;; Lists
+   '("^\\s-*\\([-+*]\\)\\s-+" . (1 'font-lock-function-name-face))
+
+   ;; Links
+   '("\\[\\([^]]+\\)\\](\\([^)\n]+\\))"
+     (1 'font-lock-variable-name-face)
+     (2 'font-lock-string-face))
+
+   ;; LaTeX-style math ($equation$)
+   '("\\$\\([^$]+?\\)\\$" . (1 'font-lock-constant-face))
+
+   ;; Inline code (`code`)
+   '("`\\([^`]+?\\)`" . (1 'font-lock-constant-face))
+
+   ;; Bold (**bold** or __bold__)
+   '("\\(^\\|[[:space:]]\\)\\(?:\\*\\*\\|__\\)\\([^[:space:]].*?[^[:space:]]\\)\\(?:\\*\\*\\|__\\)\\($\\|[[:space:]]\\)"
+     2 'bold)
+
+   ;; Italic (*italic* or _italic_)
+   '("\\(^\\|[[:space:]]\\)\\(?:\\*\\|_\\)\\([^[:space:]].*?[^[:space:]]\\)\\(?:\\*\\|_\\)\\($\\|[[:space:]]\\)"
+     2 'italic)))
 
 ;;;###autoload
 (define-derived-mode hotcrp-review-mode prog-mode "HotCRP Review"
