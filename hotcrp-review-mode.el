@@ -65,5 +65,10 @@
   (setq-local comment-start-skip "^==-==[ ]*")
   (setq-local comment-use-syntax nil))
 
+;; Any files that start with "==+== " or "==*== " will use this mode
+;;;###autoload
+(add-to-list 'magic-mode-alist
+             '("==\\(?:\\+\\|\\*\\)== " . hotcrp-review-mode))
+
 (provide 'hotcrp-review-mode)
 ;;; hotcrp-review-mode.el ends here

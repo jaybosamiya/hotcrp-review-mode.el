@@ -34,7 +34,7 @@ git clone https://github.com/jaybosamiya/hotcrp-review-mode.el.git
 
 ## Usage
 
-Open a HotCRP review file and run:
+Opening a HotCRP review file (i.e., a file that starts with either `==*==` or `==+==`) should automatically invoke this mode after installation. However, if needed, you can manually enable it via:
 
 ```
 M-x hotcrp-review-mode RET
